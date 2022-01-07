@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/karutt/kaikey.git/static/css/main.47ae9f80.css",
-    "main.js": "/karutt/kaikey.git/static/js/main.17804207.js",
-    "static/media/logo.svg": "/karutt/kaikey.git/static/media/logo.9160a0dc61a7e1eb92d7b9e89ad83fe2.svg",
-    "static/media/delete_history.svg": "/karutt/kaikey.git/static/media/delete_history.d28438776d272a5eb8eef37eea7061aa.svg",
-    "static/media/delete_num.svg": "/karutt/kaikey.git/static/media/delete_num.952290bfc5ac7408a484eb1b8f12f43b.svg",
-    "static/media/close_modal.svg": "/karutt/kaikey.git/static/media/close_modal.d6dd4107b2dcaec80fa001641e96efc8.svg",
-    "index.html": "/karutt/kaikey.git/index.html",
-    "static/media/export.svg": "/karutt/kaikey.git/static/media/export.9f1c6b8a7e33301ed482df97e2ed07be.svg",
-    "static/media/reset_stage.svg": "/karutt/kaikey.git/static/media/reset_stage.96d2ef3fb8f3f3e3359aeb9a646324e4.svg",
-    "static/media/edit_stroke2.svg": "/karutt/kaikey.git/static/media/edit_stroke2.07a9aeec0cb636b8d680993dcc1fcf0c.svg",
-    "static/media/edit_stroke1.svg": "/karutt/kaikey.git/static/media/edit_stroke1.4d2fad8ef233147814d5863c0b727d36.svg",
-    "static/media/reorder.svg": "/karutt/kaikey.git/static/media/reorder.404cc31e42aa3a21ddf45a599625a8bb.svg",
-    "static/media/delete_item.svg": "/karutt/kaikey.git/static/media/delete_item.ea8e26fefb47e49252e2c5392a82a1e0.svg",
-    "static/media/download.svg": "/karutt/kaikey.git/static/media/download.5ca6b4c3025a0954f437b63bde7bcb02.svg",
-    "static/media/add_item.svg": "/karutt/kaikey.git/static/media/add_item.aadb645a1a74aa0aa1b99e19259c224a.svg",
-    "static/media/delete_count.svg": "/karutt/kaikey.git/static/media/delete_count.074fa199411eb7eb05b8cb22f116c709.svg",
-    "main.47ae9f80.css.map": "/karutt/kaikey.git/static/css/main.47ae9f80.css.map",
-    "main.17804207.js.map": "/karutt/kaikey.git/static/js/main.17804207.js.map"
+    "main.css": "/static/css/main.47ae9f80.css",
+    "main.js": "/static/js/main.d51207b4.js",
+    "static/media/logo.svg": "/static/media/logo.9160a0dc61a7e1eb92d7b9e89ad83fe2.svg",
+    "static/media/delete_history.svg": "/static/media/delete_history.d28438776d272a5eb8eef37eea7061aa.svg",
+    "static/media/delete_num.svg": "/static/media/delete_num.952290bfc5ac7408a484eb1b8f12f43b.svg",
+    "static/media/close_modal.svg": "/static/media/close_modal.d6dd4107b2dcaec80fa001641e96efc8.svg",
+    "static/media/export.svg": "/static/media/export.9f1c6b8a7e33301ed482df97e2ed07be.svg",
+    "index.html": "/index.html",
+    "static/media/reset_stage.svg": "/static/media/reset_stage.96d2ef3fb8f3f3e3359aeb9a646324e4.svg",
+    "static/media/edit_stroke2.svg": "/static/media/edit_stroke2.07a9aeec0cb636b8d680993dcc1fcf0c.svg",
+    "static/media/edit_stroke1.svg": "/static/media/edit_stroke1.4d2fad8ef233147814d5863c0b727d36.svg",
+    "static/media/reorder.svg": "/static/media/reorder.404cc31e42aa3a21ddf45a599625a8bb.svg",
+    "static/media/delete_item.svg": "/static/media/delete_item.ea8e26fefb47e49252e2c5392a82a1e0.svg",
+    "static/media/download.svg": "/static/media/download.5ca6b4c3025a0954f437b63bde7bcb02.svg",
+    "static/media/add_item.svg": "/static/media/add_item.aadb645a1a74aa0aa1b99e19259c224a.svg",
+    "static/media/delete_count.svg": "/static/media/delete_count.074fa199411eb7eb05b8cb22f116c709.svg",
+    "main.47ae9f80.css.map": "/static/css/main.47ae9f80.css.map",
+    "main.d51207b4.js.map": "/static/js/main.d51207b4.js.map"
   },
   "entrypoints": [
     "static/css/main.47ae9f80.css",
-    "static/js/main.17804207.js"
+    "static/js/main.d51207b4.js"
   ]
 }
