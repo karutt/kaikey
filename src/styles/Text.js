@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import {typography, flexbox, space, layout, border, position } from 'styled-system'
+import { typography, flexbox, space, layout, border, position } from 'styled-system'
 
 export const Text = styled.div`
-  font-family: 'Hiragino Sans', sans-serif, serif;
+  font-family: 'Sawarabi Gothic', sans-serif;
   ${typography};
   ${flexbox};
   ${space};

@@ -1,0 +1,47 @@
+
+
+' !theme bluegray
+!theme cerulean
+!theme amiga
+
+object Item {
+    name : str
+    price : int
+}
+
+object Counter {
+    apple : 0
+    orange : 0
+    lemon : 0
+    ・・・
+}
+
+class Db {
+    state.items : object
+    state.counter : object
+    state.history: object
+---
+get_items()
+add_item()
+update_item_name()
+upddate_item_price()
+delete_item()
+---
+add_counter()
+update_counter_name()
+update_counter_number()
+increment_counter()
+delete_counter()
+reset_counter_number()
+get_counter()
+---
+add_history()
+---
+display_items()
+display_counter()
+---
+    render()
+}
+
+Db --right-- Item
+Db --right-- Counter

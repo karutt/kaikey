@@ -10,7 +10,7 @@ import {
   position,
   shadow,
 } from "styled-system";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Clickable = styled(Link)`
   ${space};
