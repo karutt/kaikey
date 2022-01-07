@@ -12,8 +12,8 @@ body {
       monospace;
   }
   
-  #root {
-    height: 100vh;
+html, body,  #root {
+    height: 100% !important;
   }
 
   .pointer {
@@ -35,4 +35,11 @@ body {
 }
 .reoder_ul {
   position: relative;
+}
+
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* The hack for Safari */
+    height: -webkit-fill-available;
+  }
 }

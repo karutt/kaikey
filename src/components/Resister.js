@@ -6,7 +6,7 @@ import { BlueBtn } from '../components/Btn';
 export function Resister(props) {
     const [count, setCount] = useState(0);
     return (
-        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100vh'>
+        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100%'>
             <Modal
                 isVisible={props.resisterIsVisible}
                 setVisible={props.setResisterIsVisible}
@@ -16,7 +16,7 @@ export function Resister(props) {
                 <MotionDiv
                     onClick={(e) => e.stopPropagation()}
                     width="60vw"
-                    height="calc(100vh - 32px)"
+                    height="calc(100% - 32px)"
                     background='#fff'
                     display='flex'
                     flexDirection='column'
@@ -24,9 +24,9 @@ export function Resister(props) {
                     justifyContent='flex-start'
                     transition={spring}
                     borderRadius={8}
-                    initial={{ opacity: 0, y: "calc(40vh - 16px)" }}
+                    initial={{ opacity: 0, y: "calc(40% - 16px)" }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: "calc(40vh - 16px)" }}
+                    exit={{ opacity: 0, y: "calc(40% - 16px)" }}
                 >
                     <Box flexDirection="column" display="flex" alignItems="center" justifyContent="flex-start" width="100%" height="25%" lineBottom={true}>
                         <Box width="100%" height={40} lineBottom={true} display="flex" alignItems="center" justifyContent="center" fontSize={16}>お支払い</Box>

@@ -5,7 +5,7 @@ import { Icon } from '../styles'
 
 export function Stage(props) {
     return (
-        <Box width="33.333%" bg="grayf6" zIndex={1} position="relative">
+        <Box height="100%" width="33.333%" bg="grayf6" zIndex={1} position="relative">
             <Box
                 py={20} pr={40}
                 height={84}
@@ -25,7 +25,7 @@ export function Stage(props) {
                     </MotionDiv>
                 </MotionDiv>
             </Box>
-            <Box height="calc(100vh - 164px)" overflow="scroll">
+            <Box height="calc(100% - 164px)" overflow="scroll">
                 <AnimatePresence>
                     {props.items.map((item, index) => {
 

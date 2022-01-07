@@ -9,7 +9,7 @@ import { BlueBtn } from '../components/Btn';
 
 export function Items(props) {
     return (
-        <Box position="relative" height="calc(100vh - 80px)">
+        <Box position="relative" height="calc(100%)">
             {/* ---------------- 追加・編集ボタン ----------------- */}
             <Box
                 width="100%" height={46}
@@ -55,7 +55,7 @@ function ReorderGroup(props) {
                 values={items}
                 onReorder={props.setItems}
                 className="reorder_ul"
-                style={{ overflow: "scroll", height: "calc(100vh - 206px" }}>
+                style={{ overflow: "scroll", height: "calc(100% - 206px" }}>
                 {items.map((item, index) => {
                     return (!item[2]) && (
                         <ReorderItem key={item} item={item} index={index}

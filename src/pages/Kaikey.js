@@ -58,7 +58,7 @@ class Kaikey extends React.Component {
 
     render() {
         return (
-            <Box height="100vh" display="flex">
+            <Box height="100%" display="flex">
 
                 <ItemModal
                     setItemModalVisible={this.setItemModalVisible}
