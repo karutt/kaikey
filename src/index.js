@@ -7,8 +7,10 @@ import './assets/css/reset.css'
 import App from './App'
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>,
   document.getElementById('root'),
 )
