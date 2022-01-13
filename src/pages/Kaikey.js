@@ -9,6 +9,7 @@ import { Stage } from '../components/Stage'
 import { Items } from '../components/Items'
 import { Custom } from '../components/Custom'
 import { Resister } from '../components/Resister'
+import { History } from '../components/History'
 
 class Kaikey extends React.Component {
     constructor(props) {
@@ -51,15 +52,15 @@ class Kaikey extends React.Component {
         this.setCalcTarget = this.setCalcTarget.bind(this);
         this.increment_item_count = this.increment_item_count.bind(this);
         this.setCalcPos = this.setCalcPos.bind(this);
-        this.reset_items_count = this.reset_items_count.bind(this);
+        this.resetItemsCount = this.resetItemsCount.bind(this);
         this.updateItemCount = this.updateItemCount.bind(this);
         this.setResisterIsVisible = this.setResisterIsVisible.bind(this);
+        this.addToHistory = this.addToHistory.bind(this);
     }
 
     render() {
         return (
             <Box height="100%" display="flex">
-
                 <ItemModal
                     setItemModalVisible={this.setItemModalVisible}
                     itemModalIsVisible={this.state.itemModalIsVisible}
@@ -83,10 +84,12 @@ class Kaikey extends React.Component {
                     resisterIsVisible={this.state.resisterIsVisible}
                     setResisterIsVisible={this.setResisterIsVisible}
                     sumPrice={this.get_sum_price(this.state.items)}
+                    addToHistory={this.addToHistory}
+                    resetItemsCount={this.resetItemsCount}
                 />
                 <Stage
                     items={this.state.items}
-                    resetItemsCount={this.reset_items_count}
+                    resetItemsCount={this.resetItemsCount}
                     setCalcPos={this.setCalcPos}
                     getSumCount={this.get_sum_count}
                     getSumPrice={this.get_sum_price}
@@ -129,7 +132,7 @@ class Kaikey extends React.Component {
                                 />
                             )}
                             {this.state.selectedTab === this.tabs[2] && (
-                                <Box width="200px" bg="grayee">ヒストリー</Box>
+                                <History history={this.state.history} />
                             )}
                         </MotionDiv>
                     </AnimatePresence>
@@ -238,7 +241,7 @@ class Kaikey extends React.Component {
         }
     }
 
-    reset_items_count() {
+    resetItemsCount() {
         let items = [...this.state.items]
         items.forEach(item => item.count = 0);
         this.setState({ items: items });
@@ -254,41 +257,21 @@ class Kaikey extends React.Component {
         // }
     }
 
-    create_history_item(items, deposit) {
-        let history_item = {};
-        history_item.date = formatDate(new Date());
-        history_item.items = items
-        history_item.deposit = deposit;
-        history_item.sum_price = this.get_sum_price(items);
-        history_item.sum_count = this.get_sum_count(items);
-        history_item.change = deposit - history_item.sum_price;
-        return history_item;
-    }
-
-    add_history(deposit) {
-        let items = [...this.state.items]
-        let history = [...this.state.history]
-        history.push(this.create_history_item(items, deposit));
-        this.setState({ history: history });
-    }
-
-    update_history_item_number(date, name, number) {
-        let history = [...this.state.history]
-        let hist_item = history.find(item => item.date === date);
-        let item = hist_item.items.find(item => item.name === name);
-        item.count = number;
-        hist_item.sum_price = this.get_sum_price(hist_item.items);
-        hist_item.sum_count = this.get_sum_count(hist_item.items);
-        let new_change = hist_item.deposit - hist_item.sum_price;
-        hist_item.change = new_change;
-        this.setState({ history: history });
-    }
-
-    update_history_item_deposit(date, deposit) {
-        let history = [...this.state.history]
-        let hist_item = history.find(item => item.date === date);
-        hist_item.deposit = deposit;
-        hist_item.change = deposit - hist_item.sum_price;
+    addToHistory(total_price, received) {
+        // itemsでカウントが１以上のものを取得
+        let items = this.state.items.filter(item => item.count > 0);
+        let sumCount = this.get_sum_count(items)
+        // 日付をM月D日 H:mに変換
+        let date = formatDate(new Date());
+        let history = [...this.state.history];
+        // history先頭に追加
+        history.unshift({
+            date: date,
+            items: items,
+            sumCount: sumCount,
+            total_price: total_price,
+            received: received
+        });
         this.setState({ history: history });
     }
 
@@ -322,29 +305,6 @@ class Kaikey extends React.Component {
         return sum;
     }
 
-    display_items() {
-        let items = this.get_items();
-        return items.map((item, index) => {
-            return <li key={index}>
-                <Box as="span" mr={10}>{item.name}</Box>
-                <Box as="span" mr={10}>{item.price}</Box>
-                <Box as="span" mr={10}>{item.count}</Box>
-            </li>
-        });
-    }
-
-    display_history() {
-        let history = this.state.history;
-        return history.slice().reverse().map((item, index) => {
-            return <li key={index}>
-                <Box mr={10}>日付{item.date}</Box>
-                <Box mr={10}>点数{item.sum_count}</Box>
-                <Box mr={10}>合計{item.sum_price}</Box>
-                <Box mr={10}>お預かり{item.deposit}</Box>
-                <Box mr={10}>お釣り{item.change}</Box>
-            </li>
-        });
-    }
 
     componentDidMount() {
 
@@ -361,15 +321,15 @@ export default Kaikey;
 
 /** 文字列に日付をフォーマットする */
 function formatDate(date) {
-    // var y = date.getFullYear();
     var m = date.getMonth() + 1;
     var d = date.getDate();
     var h = date.getHours();
     var i = date.getMinutes();
     var s = date.getSeconds();
-    // return y + "-" + m + "-" + d + " " + h + ":" + i + ":" + s;
-    return m + "月" + d + " " + h + ":" + i + ":" + s;
+    // M月D日 HH:mmに変換したものを返す
+    return m + "月" + d + "日 " + (h < 10 ? "0" + h : h) + ":" + (i < 10 ? "0" + i : i);
 }
+
 
 // tabのアニメーション設定
 const variants = {
