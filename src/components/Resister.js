@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Box, MotionDiv, Text, Icon } from '../styles';
-import { AnimatePresence } from 'framer-motion';
 import { Modal } from '../components/Modal';
 import { BlueBtn } from '../components/Btn';
 export function Resister(props) {
@@ -38,7 +37,21 @@ export function Resister(props) {
                             <Text mr="auto" fontSize={20} color={(count - props.sumPrice) < 0 ? "red" : "black45"}>{(count - props.sumPrice) < 0 ? "未精算" : "お釣り"}</Text>
                             <Text fontSize={20} color={(count - props.sumPrice) < 0 ? "red" : "black45"}>¥{count - props.sumPrice}</Text>
                         </Box>
-                        <BlueBtn width="calc(50% - 10px)" mx={5}>お会計</BlueBtn>
+                        <BlueBtn
+                            onClick={() => {
+                                if (count - props.sumPrice >= 0) {
+                                    props.addToHistory(props.sumPrice, count)
+                                    props.setResisterIsVisible(false)
+                                    props.resetItemsCount()
+                                    setCount(0)
+                                }
+                            }}
+                            width="calc(50% - 10px)" mx={5}
+                            bg={count - props.sumPrice < 0 ? "grayc6" : "blue"}
+                            border={count - props.sumPrice < 0 ? "grayc6" : "blue"}
+                        >
+                            お会計
+                        </BlueBtn>
                     </Box>
                 </MotionDiv>
             </Modal>

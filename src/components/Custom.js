@@ -105,6 +105,7 @@ export function Custom(props) {
                 px={10}
                 display="flex" alignItems="center" justifyContent="flex-end"
                 borderTop="0.5px solid #e6e6e6"
+                bg="grayf6"
             >
                 <BlueBtn
                     width="50%"

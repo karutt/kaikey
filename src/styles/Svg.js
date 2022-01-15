@@ -14,12 +14,13 @@ import { ReactComponent as edit_stroke1 } from '../assets/img/edit_stroke1.svg'
 import { ReactComponent as add_item } from '../assets/img/add_item.svg'
 import { ReactComponent as download } from '../assets/img/download.svg'
 import { ReactComponent as Export } from '../assets/img/export.svg'
+import { ReactComponent as left_arrow } from '../assets/img/left_arrow.svg'
 
 
 const Svgs = {
     logo, reorder, reset_stage, delete_item,
     delete_num, close_modal, delete_count, delete_history,
-    edit_stroke2, edit_stroke1, add_item, download, Export
+    edit_stroke2, edit_stroke1, add_item, download, Export, left_arrow
 }
 
 const SvgBase = styled.svg`
