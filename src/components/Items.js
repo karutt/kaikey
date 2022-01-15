@@ -23,7 +23,11 @@ export function Items(props) {
             </Box>
             {/* ------------------- end ---------------------- */}
 
+            {/* ---------------- 商品リスト ----------------- */}
             <ReorderGroup {...props} />
+            {/* ------------------- end ---------------------- */}
+
+            {/* ------------------ 支払いボタン ------------------ */}
             <Box
                 width="100%" height={80}
                 bg="white"
@@ -39,14 +43,26 @@ export function Items(props) {
                     支払いへ進む
                 </BlueBtn>
             </Box>
+            {/* ------------------- end ---------------------- */}
         </Box>
     );
 }
 
 function ReorderGroup(props) {
+
     const items = props.items.map((item, index) => {
         return [item.name, item.price, item.custom]
     })
+
+    const [isDragged, setIsDragged] = useState(false)
+
+    window.addEventListener('touchmove', function (event) {
+        if (isDragged) {
+            event.preventDefault();
+            setIsDragged(false)
+        }
+    }, { passive: false, once: true });
+
     return (
         <LayoutGroup>
             <Reorder.Group
@@ -55,28 +71,39 @@ function ReorderGroup(props) {
                 values={items}
                 onReorder={props.setItems}
                 className="reorder_ul"
-                style={{ overflow: "scroll", height: "calc(100% - 206px" }}>
+                style={{ overflow: "scroll", height: "calc(100% - 120px" }}
+            >
+
                 {items.map((item, index) => {
                     return (!item[2]) && (
-                        <ReorderItem key={item} item={item} index={index}
+                        <ReorderItem
+                            key={item}
+                            index={index}
+                            item={item}
                             editMode={props.editMode}
                             deleteItem={props.deleteItem}
                             setEditTarget={props.setEditTarget}
                             incrementItemCount={props.incrementItemCount}
+                            isDragged={isDragged}
+                            setIsDragged={setIsDragged}
                         />
                     )
                 }
                 )}
+
             </Reorder.Group>
         </LayoutGroup>
     )
 }
 
-function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, incrementItemCount }) {
-    const [isDragged, setIsDragged] = useState(false)
+function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, incrementItemCount, isDragged, setIsDragged }) {
+
     const y = useMotionValue(0);
     const boxShadow = useRaisedShadow(y, setIsDragged);
     const dragControls = useDragControls()
+
+
+
     return (
         <Reorder.Item key={item} value={item}
             style={{ boxShadow, y }}
@@ -93,12 +120,14 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                 bg="white"
                 whileTap={{ backgroundColor: editMode ? "#fff" : '#f5f5f5' }}
                 onTap={() => {
-                    setIsDragged(false)
                     if (!editMode) {
                         incrementItemCount(item[0])
                     }
                 }}
                 transition={{ duration: 0.1 }}
+                onPointerUp={(event) => {
+                    setIsDragged(false)
+                }}
             >
 
                 <AnimatePresence exitBeforeEnter>
@@ -144,7 +173,7 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
 
                 <MotionDiv layout transition={{ duration: 0.15 }}
                     ml={"auto"}
-                    animate={{ background: editMode ? "#f6f6f6" : "rgba(255, 255, 255, 0)" }}
+                    animate={{ background: editMode && !isDragged ? "#f6f6f6" : "rgba(255, 255, 255, 0)" }}
                     transition={spring}
                     padding={12}
                     mr={-12}
@@ -178,9 +207,8 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                                     setIsDragged(true)
                                     return dragControls.start(event)
                                 }}
-                                onPointerUp={(event) => {
-                                    setIsDragged(false)
-                                }}
+
+                                className="reorder_list"
                                 layout
                             >
                                 <Icon name="reorder" width={24} height={70} />

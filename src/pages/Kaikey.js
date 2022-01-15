@@ -17,7 +17,7 @@ class Kaikey extends React.Component {
         super(props);
         this.tabs = ["会計", "カスタム商品", "ヒストリー"];
         this.tabs_index = { "会計": 0, "カスタム商品": 1, "ヒストリー": 2 };
-        const default_items = randomFruit()
+        const default_items = randomFruit(10)
 
         this.state = {
             items: default_items,
@@ -103,7 +103,8 @@ class Kaikey extends React.Component {
                             transition={spring}
                             width="100%"
                             height="calc(100% - 80px)"
-                            overflow="scroll"
+                            overflowY="scroll"
+
                         >
                             {this.state.selectedTab === this.tabs[0] && (
                                 <Items
@@ -340,6 +341,33 @@ class Kaikey extends React.Component {
 
 
     componentDidMount() {
+
+        // var myTarget = document.querySelector('.reorder_list');
+        // myTarget.scrollTop = 1;
+        // console.log(myTarget)
+
+        // window.addEventListener('touchmove', function (event) {
+        //     console.log(myTarget.scrollTop)
+
+        //     if (event.target === myTarget && myTarget.scrollTop !== 0 && myTarget.scrollTop + myTarget.clientHeight !== myTarget.scrollHeight) {
+        //         event.stopPropagation();
+        //         // alert("Ok")
+
+        //     }
+        //     else {
+        //         // alert("not")
+        //         event.preventDefault();
+        //     }
+        // });
+
+        // myTarget.addEventListener('scroll', function (event) {
+        //     if (myTarget.scrollTop === 0) {
+        //         myTarget.scrollTop = 1;
+        //     }
+        //     else if (myTarget.scrollTop + myTarget.clientHeight === myTarget.scrollHeight) {
+        //         myTarget.scrollTop = myTarget.scrollTop - 1;
+        //     }
+        // });
 
     }
     componentDidUpdate() {

@@ -5,6 +5,7 @@ import { theme } from './lib/theme'
 import './assets/css/index.css'
 import './assets/css/reset.css'
 import './assets/css/stopScroll.css'
+import './assets/js/stopWindowScroll.js'
 
 import App from './App'
 
