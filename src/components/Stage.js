@@ -28,10 +28,6 @@ export function Stage(props) {
             <Box height="calc(100% - 164px)" overflow="scroll">
                 <AnimatePresence>
                     {props.items.map((item, index) => {
-
-                        if (item.custom && item.count == 0) {
-                            props.deleteItem(item.name);
-                        }
                         if (item.count !== 0) {
                             return (
                                 <MotionDiv

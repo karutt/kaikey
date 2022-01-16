@@ -36,7 +36,7 @@ class Kaikey extends React.Component {
         this.setItemModalVisible = this.setItemModalVisible.bind(this);
         this.addItem = this.addItem.bind(this);
         this.setItems = this.setItems.bind(this);
-        this.delete_item = this.delete_item.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
         this.updateItemName = this.updateItemName.bind(this);
         this.updateItemPrice = this.updateItemPrice.bind(this);
         this.setEditMode = this.setEditMode.bind(this);
@@ -88,7 +88,7 @@ class Kaikey extends React.Component {
                     getSumPrice={this.get_sum_price}
                     setCalcTarget={this.setCalcTarget}
                     updateItemCount={this.updateItemCount}
-                    deleteItem={this.delete_item}
+                    deleteItem={this.deleteItem}
                 />
                 <Box width="66.666%" borderLeft="solid 0.5px #c6c6c6">
                     <Header tabs={this.tabs} selectedTab={this.state.selectedTab} setSelectedTab={this.setSelectedTab} itemModalIsVisible={this.state.itemModalIsVisible} />
@@ -110,7 +110,7 @@ class Kaikey extends React.Component {
                                 <Items
                                     items={this.state.items}
                                     setItems={this.setItems}
-                                    deleteItem={this.delete_item}
+                                    deleteItem={this.deleteItem}
                                     setItemModalVisible={this.setItemModalVisible}
                                     setEditTarget={this.setEditTarget}
                                     editMode={this.state.editMode}
@@ -232,8 +232,12 @@ class Kaikey extends React.Component {
         let items = [...this.state.items]
         if (this.hasItem(items, name)) {
             let item = items.find(item => item.name === name);
-            item.count = number;
-            this.setState({ items: items });
+            if (item.custom && number === 0) {
+                this.deleteItem(name);
+            } else {
+                item.count = number;
+                this.setState({ items: items });
+            }
         }
     }
 
@@ -247,7 +251,7 @@ class Kaikey extends React.Component {
     }
 
     resetItemsCount() {
-        const new_items = []
+        let new_items = []
         for (let item of [...this.state.items]) {
             new_items.push({ ...item });
         }
@@ -265,13 +269,9 @@ class Kaikey extends React.Component {
         this.setState({ items: new_items });
     }
 
-    delete_item(name) {
+    deleteItem(name) {
         // state.itemsの深いコピーを作成
-        const new_items = []
-        for (let item of [...this.state.items]) {
-            new_items.push({ ...item });
-        }
-
+        let new_items = [...this.state.items]
         // if (window.confirm("「" + name + "」を削除しますか？")) {
         if (this.hasItem(new_items, name)) {
             new_items = new_items.filter(item => item.name !== name);
