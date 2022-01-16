@@ -8,6 +8,7 @@ import { LayoutGroup, AnimatePresence } from 'framer-motion';
 import { BlueBtn } from '../components/Btn';
 
 export function Items(props) {
+
     return (
         <Box position="relative" height="calc(100%)">
             {/* ---------------- 追加・編集ボタン ----------------- */}
@@ -50,9 +51,6 @@ export function Items(props) {
 
 function ReorderGroup(props) {
 
-    const items = props.items.map((item, index) => {
-        return [item.name, item.price, item.custom]
-    })
 
     const [isDragged, setIsDragged] = useState(false)
 
@@ -68,17 +66,18 @@ function ReorderGroup(props) {
             <Reorder.Group
                 as="ul"
                 axis="y"
-                values={items}
-                onReorder={props.setItems}
+                values={props.ids}
+                onReorder={props.setIds}
                 className="reorder_ul"
                 style={{ overflow: "scroll", height: "calc(100% - 120px" }}
             >
 
-                {items.map((item, index) => {
-                    return (!item[2]) && (
+                {props.ids.map((id) => {
+                    const item = props.items[id]
+                    return (!item.custom) && (
                         <ReorderItem
-                            key={item}
-                            index={index}
+                            key={id}
+                            index={id}
                             item={item}
                             editMode={props.editMode}
                             deleteItem={props.deleteItem}
@@ -101,11 +100,9 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
     const y = useMotionValue(0);
     const boxShadow = useRaisedShadow(y, setIsDragged);
     const dragControls = useDragControls()
-
-
-
     return (
-        <Reorder.Item key={item} value={item}
+        <Reorder.Item
+            value={index}
             style={{ boxShadow, y }}
             dragListener={false}
             dragControls={dragControls}
@@ -121,7 +118,7 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                 whileTap={{ backgroundColor: editMode ? "#fff" : '#f5f5f5' }}
                 onTap={() => {
                     if (!editMode) {
-                        incrementItemCount(item[0])
+                        incrementItemCount(item.name)
                     }
                 }}
                 transition={{ duration: 0.1 }}
@@ -142,7 +139,7 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                         {editMode ?
                             <MotionDiv
                                 mr={36}
-                                onClick={() => deleteItem(item[0])}
+                                onClick={() => deleteItem(item.name)}
                                 layout
                             >
                                 <Icon name="delete_item" />
@@ -153,27 +150,27 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                 </AnimatePresence>
 
 
-                <MotionDiv layout transition={{ duration: 0.15 }}
+                <MotionDiv layout
                     mr={10}
                     padding={12}
                     ml={-12}
                     borderRadius={5}
                     style={{ cursor: editMode ? "pointer" : "default" }}
-                    animate={{ background: editMode ? "#f6f6f6" : "rgba(255, 255, 255, 0)" }}
+                    animate={{ background: editMode && !isDragged ? "rgba(246,246,246,1)" : "rgba(255, 255, 255, 0)" }}
                     transition={spring}
                     onTap={() => {
                         if (editMode) {
-                            setEditTarget(item[0])
+                            setEditTarget(item.name)
                         }
                     }}>
                     <Text fontWeight={600} fontSize={18} color="black45">
-                        {item[0]}
+                        {item.name}
                     </Text>
                 </MotionDiv>
 
-                <MotionDiv layout transition={{ duration: 0.15 }}
+                <MotionDiv layout
                     ml={"auto"}
-                    animate={{ background: editMode && !isDragged ? "#f6f6f6" : "rgba(255, 255, 255, 0)" }}
+                    animate={{ background: editMode && !isDragged ? "rgba(246,246,246,1)" : "rgba(255, 255, 255, 0)" }}
                     transition={spring}
                     padding={12}
                     mr={-12}
@@ -181,12 +178,12 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
                     style={{ cursor: editMode ? "pointer" : "default" }}
                     onTap={() => {
                         if (editMode) {
-                            setEditTarget(item[0])
+                            setEditTarget(item.name)
                         }
                     }}
                 >
                     <Text fontSize={18} color="black45">
-                        ¥{item[1]}
+                        ¥{item.price}
                     </Text>
                 </MotionDiv>
 
@@ -228,6 +225,6 @@ function ReorderItem({ item, index, deleteItem, editMode, setEditTarget, increme
 
 // const tabs = ["会計", "カスタム商品", "ヒストリー"];
 const spring = {
-    ease: [.08, .48, 0, .96],
-    duration: 0.2,
+    ease: [.44, .59, .69, .94],
+    duration: 0.15,
 };

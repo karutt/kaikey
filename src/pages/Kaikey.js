@@ -21,6 +21,7 @@ class Kaikey extends React.Component {
 
         this.state = {
             items: default_items,
+            ids: Array.from({ length: default_items.length }, (_, i) => i),
             history: [],
             editMode: false,
             editTarget: "",
@@ -35,7 +36,6 @@ class Kaikey extends React.Component {
         this.setSelectedTab = this.setSelectedTab.bind(this);
         this.setItemModalVisible = this.setItemModalVisible.bind(this);
         this.addItem = this.addItem.bind(this);
-        this.setItems = this.setItems.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.updateItemName = this.updateItemName.bind(this);
         this.updateItemPrice = this.updateItemPrice.bind(this);
@@ -49,6 +49,7 @@ class Kaikey extends React.Component {
         this.setResisterIsVisible = this.setResisterIsVisible.bind(this);
         this.addToHistory = this.addToHistory.bind(this);
         this.deleteHistory = this.deleteHistory.bind(this);
+        this.setIds = this.setIds.bind(this);
     }
 
     render() {
@@ -109,7 +110,8 @@ class Kaikey extends React.Component {
                             {this.state.selectedTab === this.tabs[0] && (
                                 <Items
                                     items={this.state.items}
-                                    setItems={this.setItems}
+                                    ids={this.state.ids}
+                                    setIds={this.setIds}
                                     deleteItem={this.deleteItem}
                                     setItemModalVisible={this.setItemModalVisible}
                                     setEditTarget={this.setEditTarget}
@@ -148,15 +150,22 @@ class Kaikey extends React.Component {
         this.setState({ itemModalIsVisible: visible });
     }
 
+    setIds(ids) {
+        if (ids === undefined) {
+            this.setState({
+                ids: Array.from({ length: this.state.items.length }, (_, i) => i),
+            });
+        } else {
+            this.setState({
+                ids: ids,
+            });
+        }
+    }
+
     setSelectedTab(tab) {
         const direction = this.tabs_index[tab] - this.tabs_index[this.state.selectedTab] > 0 ? "right" : "left";
         this.setState({ direction: direction });
         this.setState({ selectedTab: tab });
-    }
-
-    setItems(items) {
-        const json_items = items.map((item, index) => { return { name: item[0], price: item[1], count: 0, custom: item[2] } })
-        this.setState({ items: json_items });
     }
 
     setEditMode() {
@@ -205,7 +214,11 @@ class Kaikey extends React.Component {
             return false;
         } else {
             items.push({ name: name, price: price, count: count, custom: custom });
-            this.setState({ items: items });
+            this.setState({ items: items },
+                () => {
+                    const newIds = this.state.ids.concat(this.state.items.length - 1);
+                    this.setIds(newIds);
+                });
             return true;
         }
     }
@@ -275,7 +288,11 @@ class Kaikey extends React.Component {
         // if (window.confirm("「" + name + "」を削除しますか？")) {
         if (this.hasItem(new_items, name)) {
             new_items = new_items.filter(item => item.name !== name);
-            this.setState({ items: new_items });
+            let newIds = Array.from({ length: new_items.length }, (_, i) => i)
+            this.setState({ ids: newIds }, () => {
+                this.setState({ items: new_items });
+            });
+
         }
         // }
     }
